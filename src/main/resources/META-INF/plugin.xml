@@ -9,7 +9,7 @@
     Amazon AWS CloudFormation language support
   ]]></description>
 
-  <idea-version since-build="133.193"/>
+  <idea-version since-build="133.193" until-build="139.0" />
 
   <depends>com.intellij.modules.lang</depends>
   <depends>JavaScript</depends>
