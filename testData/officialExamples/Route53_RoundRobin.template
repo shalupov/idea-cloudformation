@@ -7,7 +7,7 @@
     "HostedZone" : {
       "Type" : "String",
       "Description" : "The DNS name of an existing Amazon Route 53 hosted zone",
-      "AllowedPattern" : "(?!-)[a-zA-Z0-9-]{1,63}(?<!-)",
+      "AllowedPattern" : "(?!-)[a-zA-Z0-9-.]{1,63}(?<!-)",
       "ConstraintDescription" : "must be a valid DNS zone name."
     }
   },

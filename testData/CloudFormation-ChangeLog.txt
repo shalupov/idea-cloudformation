@@ -1,7 +1,15 @@
 [Amazon Web Services] <http://aws.amazon.com/documentation>
 AWS CloudFormation
 User Guide (API Version 2010-05-15)
-Search: [Go]
+AWS Documentation <http://aws.amazon.com/documentation> » AWS 
+CloudFormation <http://aws.amazon.com/documentation/cloudformation/> » 
+User Guide <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/> 
+» Document History
+Did this page help you?  Yes | No |  Tell us about it...
+<https://portal.aws.amazon.com/gp/aws/html-forms-controller/documentation/aws_doc_feedback_04?service_name=CloudFormation&guide_name=User%20Guide&api_version=2010-05-15&file_name=DocumentHistory>
+« PreviousNext »
+
+[Go]
 
     * What is AWS CloudFormation?
           o AWS CloudFormation Concepts
@@ -14,6 +22,7 @@ Search: [Go]
           o Walkthrough: Custom Resources
           o Using CloudFormer to Create Templates
           o AWS CloudFormation Endpoints
+    * Best Practices
     * Controlling Access with IAM
     * Working with Stacks
           o Using the Console
@@ -58,7 +67,7 @@ Search: [Go]
           o Example Templates
                 + Auto Scaling Group with LoadBalancer, Auto Scaling
                   Policies, and CloudWatch Alarms
-                + Amazon EC2 Running an Amazon Linux 32-bit AMI
+                + Amazon EC2 Running an Amazon Linux AMI
                 + Create a Load-Balanced Apache Website
                 + Auto-Scaled Worker that uses Spot Instances to Monitor
                   Work in an SQS Queue
@@ -339,19 +348,12 @@ Search: [Go]
     * Troubleshooting
     * Document History
     * AWS Glossary
-AWS Documentation <http://aws.amazon.com/documentation> » AWS 
-CloudFormation <http://aws.amazon.com/documentation/cloudformation/> » 
-User Guide <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/> 
-» Document History
-« PreviousNext »
 [View the PDF for this guide.]
 <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-ug.pdf> 
 [Go to the AWS Discussion Forum for this product.]
 <http://forums.aws.amazon.com/forum.jspa?forumID=92> [Go to the Kindle 
 Store to download this guide in Kindle format.]
-<http://www.amazon.com/dp/B007S28IUW> 	Did this page help you?  Yes | No |  
-Tell us about it...
-<https://portal.aws.amazon.com/gp/aws/html-forms-controller/documentation/aws_doc_feedback_04?service_name=CloudFormation&guide_name=User%20Guide&api_version=2010-05-15&file_name=DocumentHistory>
+<http://www.amazon.com/dp/B007S28IUW>
 
 
 Document History
@@ -1308,7 +1310,6 @@ Initial Release
 This is the initial public release of AWS CloudFormation.
 
 February 25, 2011
-Document Conventions 	« PreviousNext »
-Terms of Use <http://aws.amazon.com/terms/> 	Did this page help you?  Yes | 
-No |  Tell us about it...
-<https://portal.aws.amazon.com/gp/aws/html-forms-controller/documentation/aws_doc_feedback_04?service_name=CloudFormation&guide_name=User%20Guide&api_version=2010-05-15&file_name=DocumentHistory>
+Document Conventions 	© 2014, Amazon Web Services, Inc. or its affiliates. 
+All rights reserved.
+Terms of Use <http://aws.amazon.com/terms/> 	

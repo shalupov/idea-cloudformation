@@ -157,7 +157,7 @@
       "Metadata" : {
         "AWS::CloudFormation::Init" : {
           "configSets" : {
-            "install_all" : [ "install_cfn", "install_logs", "install_app" ]
+            "install_all" : [ "install_cfn", "install_app", "install_logs" ]
           },
 
           "install_cfn" : {
@@ -196,60 +196,6 @@
             }
           },
 
-          "install_logs": {
-            "packages" : {
-              "yum" : {
-                "awslogs" : []
-              }
-            },
-
-            "files": {
-              "/tmp/cwlogs/cfn-logs.conf": {
-                "content": { "Fn::Join": [ "", [
-                  "[general]\n",
-                  "state_file= /var/awslogs/agent-state\n",
-
-                  "[/var/log/cloud-init.log]\n",
-                  "file = /var/log/cloud-init.log\n",
-                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
-                  "log_stream_name = {instance_id}/cloud-init.log\n",
-                  "datetime_format = \n",
-
-                  "[/var/log/cfn-init.log]\n",
-                  "file = /var/log/cfn-init.log\n",
-                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
-                  "log_stream_name = {instance_id}/cfn-init.log\n",
-                  "datetime_format = \n",
-
-                  "[/var/log/cfn-hup.log]\n",
-                  "file = /var/log/cfn-hup.log\n",
-                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
-                  "log_stream_name = {instance_id}/cfn-hup.log\n",
-                  "datetime_format = \n",
-
-                  "[/var/log/cfn-wire.log]\n",
-                  "file = /var/log/cfn-wire.log\n",
-                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
-                  "log_stream_name = {instance_id}/cfn-wire.log\n",
-                  "datetime_format = \n"
-                ] ] },
-                "mode": "000444",
-                "owner": "root",
-                "group": "root"
-              }
-            },
-            "commands" : {
-              "enable_logs" : {
-                "command" : "chkconfig awslogs on"
-              }
-            },
-            "services" : {
-              "sysvinit" : {
-                "awslogs"    : { "enabled" : "true", "ensureRunning" : "true" }
-              }
-            }
-          },
-
           "install_app" : {
             "packages" : {
               "yum" : {
@@ -274,6 +220,73 @@
                 "httpd"    : { "enabled" : "true", "ensureRunning" : "true" }
               }
             }
+          },
+
+          "install_logs": {
+            "packages" : {
+              "yum" : {
+                "awslogs" : []
+              }
+            },
+
+            "files": {
+              "/etc/awslogs/awslogs.conf": {
+                "content": { "Fn::Join": [ "", [
+                  "[general]\n",
+                  "state_file= /var/awslogs/state/agent-state\n",
+
+                  "[/var/log/cloud-init.log]\n",
+                  "file = /var/log/cloud-init.log\n",
+                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
+                  "log_stream_name = {instance_id}/cloud-init.log\n",
+                  "datetime_format = \n",
+
+                  "[/var/log/cloud-init-output.log]\n",
+                  "file = /var/log/cloud-init-output.log\n",
+                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
+                  "log_stream_name = {instance_id}/cloud-init-output.log\n",
+                  "datetime_format = \n",
+
+                  "[/var/log/cfn-init.log]\n",
+                  "file = /var/log/cfn-init.log\n",
+                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
+                  "log_stream_name = {instance_id}/cfn-init.log\n",
+                  "datetime_format = \n",
+
+                  "[/var/log/cfn-hup.log]\n",
+                  "file = /var/log/cfn-hup.log\n",
+                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
+                  "log_stream_name = {instance_id}/cfn-hup.log\n",
+                  "datetime_format = \n",
+
+                  "[/var/log/cfn-wire.log]\n",
+                  "file = /var/log/cfn-wire.log\n",
+                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
+                  "log_stream_name = {instance_id}/cfn-wire.log\n",
+                  "datetime_format = \n",
+
+                  "[/var/log/httpd]\n",
+                  "file = /var/log/httpd/*\n",
+                  "log_group_name = ", { "Ref": "CloudFormationLogs" }, "\n",
+                  "log_stream_name = {instance_id}/httpd\n",
+                  "datetime_format = %d/%b/%Y:%H:%M:%S\n"
+                ] ] },
+                "mode": "000444",
+                "owner": "root",
+                "group": "root"
+              }
+            },
+            "commands" : {
+              "01_create_state_directory" : {
+                "command" : "mkdir -p /var/awslogs/state"
+              }
+            },
+            "services" : {
+              "sysvinit" : {
+                "awslogs"    : { "enabled" : "true", "ensureRunning" : "true",
+                                 "files" : [ "/etc/awslogs/awslogs.conf" ] }
+              }
+            }
           }
         }
       },
@@ -281,6 +294,7 @@
         "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
         "KeyName" : { "Ref" : "KeyName" },
         "InstanceType" : { "Ref" : "InstanceType" },
+        "IamInstanceProfile" : { "Ref" : "LogRoleInstanceProfile" },
         "ImageId" : { "Fn::FindInMap" : [ "AWSRegionArch2AMI", { "Ref" : "AWS::Region" },
                                           { "Fn::FindInMap" : [ "AWSInstanceType2Arch", { "Ref" : "InstanceType" },
                                           "Arch" ] } ] },
