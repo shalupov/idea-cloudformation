@@ -261,6 +261,22 @@ public class ResourceTypesSaver {
       resourceType.properties.add(CloudFormationResourceProperty.create("ApplicationVersions", "", "Unknown", false, ""));
     }
 
+    // https://github.com/shalupov/idea-cloudformation/issues/51
+    if (name.equals("AWS::AutoScaling::AutoScalingGroup")) {
+      // Not in official documentation yet, found in examples
+      final CloudFormationResourceProperty notificationConfigurationsProperty = resourceType.findProperty("NotificationConfigurations");
+      if (notificationConfigurationsProperty == null) {
+        throw new RuntimeException("Expected NotificationConfigurations property");
+      }
+
+      resourceType.properties.add(CloudFormationResourceProperty.create(
+          "NotificationConfiguration",
+          notificationConfigurationsProperty.description,
+          notificationConfigurationsProperty.type,
+          notificationConfigurationsProperty.required,
+          notificationConfigurationsProperty.updateRequires));
+    }
+
     if (name.equals("AWS::IAM::AccessKey")) {
       resourceType.findProperty("Status").required = false;
     }

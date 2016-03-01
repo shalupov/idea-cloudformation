@@ -473,6 +473,13 @@
           <required>false</required>
           <updateRequires>&lt;p&gt;&lt;span class=&quot;emphasis&quot;&gt;&lt;em&gt;Update requires&lt;/em&gt;&lt;/span&gt;: &lt;a class=&quot;link&quot; href=&quot;using-cfn-updating-stacks.html#update-some-interrupt&quot;&gt;Some interruptions&lt;/a&gt;&lt;/p&gt;</updateRequires>
         </ResourceProperty>
+        <ResourceProperty>
+          <name>NotificationConfiguration</name>
+          <description>&lt;p&gt;An embedded property that configures an Auto Scaling group to send notifications when specified events take place.&lt;/p&gt;</description>
+          <type>&lt;p&gt;&lt;span class=&quot;emphasis&quot;&gt;&lt;em&gt;Type&lt;/em&gt;&lt;/span&gt;: List of &lt;a class=&quot;xref&quot; href=&quot;aws-properties-as-notificationconfigurations.html&quot; title=&quot;Auto Scaling NotificationConfigurations&quot;&gt;Auto Scaling NotificationConfigurations&lt;/a&gt;&lt;/p&gt;</type>
+          <required>false</required>
+          <updateRequires>&lt;p&gt;&lt;span class=&quot;emphasis&quot;&gt;&lt;em&gt;Update requires&lt;/em&gt;&lt;/span&gt;: &lt;a class=&quot;link&quot; href=&quot;using-cfn-updating-stacks.html#update-no-interrupt&quot;&gt;No interruption&lt;/a&gt;&lt;/p&gt;</updateRequires>
+        </ResourceProperty>
       </properties>
       <attributes/>
     </ResourceType>
