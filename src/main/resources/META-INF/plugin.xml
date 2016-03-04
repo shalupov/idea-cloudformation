@@ -6,7 +6,7 @@
   <vendor url="https://github.com/shalupov" email="leonid@shalupov.com">Leonid Shalupov</vendor>
 
   <description><![CDATA[
-    <p>Amazon AWS CloudFormation language support ofr IDEA 16+
+    <p>Amazon AWS CloudFormation language support for IDEA 16+
     <p>
     <p>Open any *.template or *.json file with CloudFormation JSON inside. There should be number of features available:
     <ul>
