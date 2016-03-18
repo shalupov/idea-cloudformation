@@ -90,7 +90,7 @@ public class CloudFormationDocumentationProvider extends AbstractDocumentationPr
       return "";
     }
 
-    final JsonProperty typeProperty = resourceValue.findProperty(CloudFormationConstants.TypePropertyName);
+    final JsonProperty typeProperty = CloudFormationPsiUtils.getPropertyByName(resourceValue, CloudFormationConstants.TypePropertyName);
     if (typeProperty == null) {
       return "";
     }

@@ -86,7 +86,7 @@ public class CloudFormationFormatChecker {
       }
     }
 
-    if (root.findProperty(CloudFormationSections.Resources) == null) {
+    if (CloudFormationPsiUtils.getPropertyByName(root, CloudFormationSections.Resources) == null) {
       addProblem(root, CloudFormationBundle.getString("format.resources.section.required"));
     }
   }
@@ -206,7 +206,7 @@ public class CloudFormationFormatChecker {
       return;
     }
 
-    final JsonProperty typeProperty = obj.findProperty(CloudFormationConstants.TypePropertyName);
+    final JsonProperty typeProperty = CloudFormationPsiUtils.getPropertyByName(obj, CloudFormationConstants.TypePropertyName);
     if (typeProperty == null) {
       addProblemOnNameElement(resourceProperty, CloudFormationBundle.getString("format.type.property.required"));
       return;
@@ -222,7 +222,7 @@ public class CloudFormationFormatChecker {
 
     resourceType(typeProperty);
 
-    final JsonProperty propertiesProperty = obj.findProperty(CloudFormationConstants.PropertiesPropertyName);
+    final JsonProperty propertiesProperty = CloudFormationPsiUtils.getPropertyByName(obj, CloudFormationConstants.PropertiesPropertyName);
     if (propertiesProperty != null) {
       resourceProperties(propertiesProperty, typeProperty);
     } else {

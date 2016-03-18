@@ -8,6 +8,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.ObjectUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CloudFormationPsiUtils {
@@ -28,16 +29,27 @@ public class CloudFormationPsiUtils {
 
   @Nullable
   public static JsonObject getObjectLiteralExpressionChild(@Nullable JsonObject parent, String childName) {
-    if (parent == null) {
-      return null;
-    }
-
-    final JsonProperty property = parent.findProperty(childName);
+    JsonProperty property = getPropertyByName(parent, childName);
     if (property == null) {
       return null;
     }
 
     return ObjectUtils.tryCast(property.getValue(), JsonObject.class);
+  }
+
+  @Nullable
+  public static JsonProperty getPropertyByName(@Nullable JsonObject parent, @NotNull String propertyName) {
+    if (parent == null) {
+      return null;
+    }
+
+    for (JsonProperty jsonProperty : parent.getPropertyList()) {
+      if (propertyName.equals(jsonProperty.getName())) {
+        return jsonProperty;
+      }
+    }
+
+    return null;
   }
 
   public static boolean isResourceTypeValuePosition(PsiElement position) {

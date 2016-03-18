@@ -110,7 +110,7 @@ public class CloudFormationCompletionContributor extends CompletionContributor {
     }
 
     for (String name : CloudFormationConstants.AllTopLevelResourceProperties) {
-      if (resourceExpression.findProperty(name) == null) {
+      if (CloudFormationPsiUtils.getPropertyByName(resourceExpression, name) == null) {
         rs.addElement(createLookupElement(name, quoteResult));
       }
     }
@@ -158,7 +158,7 @@ public class CloudFormationCompletionContributor extends CompletionContributor {
       return;
     }
 
-    final JsonProperty typeProperty = resourceProperties.findProperty(CloudFormationConstants.TypePropertyName);
+    final JsonProperty typeProperty = CloudFormationPsiUtils.getPropertyByName(resourceProperties, CloudFormationConstants.TypePropertyName);
     if (typeProperty == null || typeProperty.getValue() == null) {
       return;
     }
@@ -201,7 +201,7 @@ public class CloudFormationCompletionContributor extends CompletionContributor {
       return;
     }
 
-    final JsonProperty typeProperty = resourceValue.findProperty(CloudFormationConstants.TypePropertyName);
+    final JsonProperty typeProperty = CloudFormationPsiUtils.getPropertyByName(resourceValue, CloudFormationConstants.TypePropertyName);
     if (typeProperty == null) {
       return;
     }
@@ -219,7 +219,7 @@ public class CloudFormationCompletionContributor extends CompletionContributor {
     }
 
     for (CloudFormationResourceProperty propertyMetadata : resourceTypeMetadata.properties) {
-      if (propertiesExpression.findProperty(propertyMetadata.name) != null) {
+      if (CloudFormationPsiUtils.getPropertyByName(propertiesExpression, propertyMetadata.name) != null) {
         continue;
       }
 
