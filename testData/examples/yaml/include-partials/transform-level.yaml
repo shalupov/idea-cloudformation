@@ -1,0 +1,51 @@
+---
+Resource:
+  IamSamlRole1:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Federated:
+                Fn::Sub: arn:aws:iam::${AWS::AccountId}:saml-provider/MySamlProvider
+            Action: sts:AssumeRoleWithSAML
+            Condition:
+              StringEquals:
+                SAML:aud:
+                  Ref: IamAuditUri
+
+  IamSamlRole2:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Federated:
+                Fn::Sub: arn:aws:iam::${AWS::AccountId}:saml-provider/MySamlProvider
+            Action: sts:AssumeRoleWithSAML
+            Condition:
+              StringEquals:
+                SAML:aud:
+                  Ref: IamAuditUri
+
+Outputs:
+  IamUserRole1Output:
+    Description: IAM Role for the Account Federated ReadOnly User
+    Value:
+      Ref: ReadOnlyFedUserIamRole
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-FederatedUser-Role1
+  IamUserRole2Output:
+    Description: IAM Role for the Account Federated ReadOnly User
+    Value:
+      Ref: ReadOnlyFedUserIamRole
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-FederatedUser-Role2

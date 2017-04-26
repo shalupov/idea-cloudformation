@@ -1,0 +1,23 @@
+---
+# Cannot use include here
+AWSTemplateFormatVersion: 2010-09-09
+
+# Cannot have duplicate scopes in this file which are in the transform level file
+# as it will cause a scope collision 
+
+# Can use Include here
+Metadata:
+ Roles:
+    Description: Information about the roles
+
+Transform:
+  Name: AWS::Include
+  Parameters:
+    Location:  s3://my-partials-bucket/include-partials/transform-level.yaml
+
+#Cannot have Include here
+Parameters:
+  IamAuditUri:
+    Description: URI for Audit Trust of Federated Login
+    Type: String
+    Default: https://signin.aws.amazon.com/saml
