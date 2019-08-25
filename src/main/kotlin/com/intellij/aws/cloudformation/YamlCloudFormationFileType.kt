@@ -1,6 +1,5 @@
 package com.intellij.aws.cloudformation
 
-import com.google.common.base.Charsets
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.fileTypes.FileTypeManager
 import com.intellij.openapi.fileTypes.LanguageFileType
@@ -12,8 +11,6 @@ import org.jetbrains.yaml.YAMLLanguage
 import javax.swing.Icon
 
 class YamlCloudFormationFileType : LanguageFileType(YAMLLanguage.INSTANCE), FileTypeIdentifiableByVirtualFile {
-  private val fileTypeRecursionGuard = RecursionManager.createGuard(javaClass.simpleName)
-
   override fun getName(): String = "AWSCloudFormation (YAML)"
   override fun getDescription(): String = "AWS CloudFormation templates (YAML)"
   override fun getDefaultExtension(): String = ""
@@ -22,7 +19,7 @@ class YamlCloudFormationFileType : LanguageFileType(YAMLLanguage.INSTANCE), File
   override fun isMyFileType(file: VirtualFile): Boolean {
     val extension = file.extension ?: return false
 
-    return fileTypeRecursionGuard.doPreventingRecursion(javaClass, false, {
+    return RecursionManager.doPreventingRecursion(javaClass, false, {
       if (YamlCloudFormationFileType.EXTENSION1.equals(extension, ignoreCase = true) ||
           YamlCloudFormationFileType.EXTENSION2.equals(extension, ignoreCase = true) ||
           FileTypeManager.getInstance().getFileTypeByFile(file) === YAMLFileType.YML) {
