@@ -4,7 +4,6 @@ import com.intellij.aws.cloudformation.CloudFormationInspections
 import com.intellij.aws.cloudformation.CloudFormationParser
 import com.intellij.aws.cloudformation.CloudFormationProblem
 import com.intellij.aws.cloudformation.model.CfnNode
-import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.openapi.vfs.CharsetToolkit
@@ -24,18 +23,8 @@ object TestUtil {
     return File(testDataRoot, relativePath)
   }
 
-  private val testDataRoot: File
+  val testDataRoot: File
     get() = File("testData").absoluteFile
-
-  fun getTestDataPathRelativeToIdeaHome(relativePath: String): String {
-    val homePath = File(PathManager.getHomePath())
-    val testDir = File(testDataRoot, relativePath)
-
-    val relativePathToIdeaHome = FileUtil.getRelativePath(homePath, testDir) ?:
-        throw RuntimeException("getTestDataPathRelativeToIdeaHome: FileUtil.getRelativePath('$homePath', '$testDir') returned null")
-
-    return relativePathToIdeaHome
-  }
 
   fun nodeToString(node: CfnNode): String = MyToStringStyle.toString(node, arrayOf("allTopLevelProperties", "functionId"))
 
