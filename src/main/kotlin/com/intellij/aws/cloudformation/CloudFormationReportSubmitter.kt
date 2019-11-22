@@ -79,7 +79,6 @@ class CloudFormationReportSubmitter : ErrorReportSubmitter() {
     builder.appendln("app.build.date = ${DateFormatUtil.getIso8601Format().format(appInfo.buildDate.time)}")
     builder.appendln("app.build.date.release = ${DateFormatUtil.getIso8601Format().format(appInfo.majorReleaseBuildDate.time)}")
     builder.appendln("app.build.date.release = ${DateFormatUtil.getIso8601Format().format(appInfo.majorReleaseBuildDate.time)}")
-    builder.appendln("app.compilation.timestamp = ${IdeaLogger.getOurCompilationTimestamp()}")
     builder.appendln("app.product.code = ${appInfo.build.productCode}")
 
     builder.appendln()

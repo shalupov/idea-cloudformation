@@ -27,16 +27,6 @@
     </ul>
   ]]></description>
 
-  <change-notes><![CDATA[
-    <h4>0.5.24</h4>
-    <p>fix some exceptions, support Fn::Split</p>
-    <h4>0.5.19</h4>
-    <p>YAML: 'param' and 'ref' live templates</p>
-    <p>QuickDoc: Fix external links, fix quickdoc on resource types</p>
-    <p>YAML: better completion</p>
-    <p>Parameters section: 'param' live template, verify Parameters section, provide completion on parameter properties and type</p>
-  ]]></change-notes>
-
   <!-- from IDEA 2019.2 to IDEA 2019.3 -->
   <idea-version since-build="192" until-build="193.*"/>
 
@@ -63,26 +53,35 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <documentationProvider implementation="com.intellij.aws.cloudformation.CloudFormationDocumentationProvider"/>
-    <fileTypeFactory implementation="com.intellij.aws.cloudformation.CloudFormationFileTypeFactory"/>
+
+    <fileTypeDetector implementation="com.intellij.aws.cloudformation.CloudFormationFileTypeDetector" />
+
+    <fileType name="AWSCloudFormation (JSON)" implementationClass="com.intellij.aws.cloudformation.JsonCloudFormationFileType" fieldName="INSTANCE" language="JSON" />
+    <fileType name="AWSCloudFormation (YAML)" implementationClass="com.intellij.aws.cloudformation.YamlCloudFormationFileType" fieldName="INSTANCE" language="yaml" />
+    <lang.substitutor language="TEXT" implementationClass="com.intellij.aws.cloudformation.CloudFormationLanguageSubstitutor" />
 
     <psi.referenceContributor implementation="com.intellij.aws.cloudformation.CloudFormationReferenceContributor"/>
 
     <localInspection language="JSON" bundle="com.intellij.aws.cloudformation.CloudFormationBundle"
                      key="aws.cloudformation.inspections.formatViolation"
                      groupKey="aws.cloudformation.inspections.group.name" enabledByDefault="true" level="ERROR"
+                     hasStaticDescription="true"
                      implementationClass="com.intellij.aws.cloudformation.inspections.JsonFormatViolationInspection"/>
     <localInspection language="JSON" bundle="com.intellij.aws.cloudformation.CloudFormationBundle"
                      key="aws.cloudformation.inspections.unresolvedReference"
                      groupKey="aws.cloudformation.inspections.group.name" enabledByDefault="true" level="ERROR"
+                     hasStaticDescription="true"
                      implementationClass="com.intellij.aws.cloudformation.inspections.JsonUnresolvedReferencesInspection"/>
 
     <localInspection language="yaml" bundle="com.intellij.aws.cloudformation.CloudFormationBundle"
                      key="aws.cloudformation.inspections.formatViolation"
                      groupKey="aws.cloudformation.inspections.group.name" enabledByDefault="true" level="ERROR"
+                     hasStaticDescription="true"
                      implementationClass="com.intellij.aws.cloudformation.inspections.YamlFormatViolationInspection"/>
     <localInspection language="yaml" bundle="com.intellij.aws.cloudformation.CloudFormationBundle"
                      key="aws.cloudformation.inspections.unresolvedReference"
                      groupKey="aws.cloudformation.inspections.group.name" enabledByDefault="true" level="ERROR"
+                     hasStaticDescription="true"
                      implementationClass="com.intellij.aws.cloudformation.inspections.YamlUnresolvedReferencesInspection"/>
 
     <completion.contributor language="JSON" order="first" implementationClass="com.intellij.aws.cloudformation.JsonCloudFormationCompletionContributor"/>

@@ -4,9 +4,9 @@ import com.intellij.aws.cloudformation.CloudFormationInspections
 import com.intellij.aws.cloudformation.CloudFormationParser
 import com.intellij.aws.cloudformation.CloudFormationProblem
 import com.intellij.aws.cloudformation.model.CfnNode
+import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.util.text.StringUtil
-import com.intellij.openapi.vfs.CharsetToolkit
 import com.intellij.psi.PsiFile
 import com.intellij.rt.execution.junit.FileComparisonFailure
 import junit.framework.TestCase
@@ -23,8 +23,28 @@ object TestUtil {
     return File(testDataRoot, relativePath)
   }
 
-  val testDataRoot: File
-    get() = File("testData").absoluteFile
+  val testDataRoot by lazy {
+    val lookupDirectories = listOf(
+      File(PathManager.getHomePath()),
+      File(PathManager.getHomePath()).parentFile,
+      File(System.getProperty("user.dir"))
+    )
+
+    val lookupMarker = listOf(
+      "intellij-plugins/CloudFormation/testData/cloudFormationTestData.marker",
+      "contrib/CloudFormation/testData/cloudFormationTestData.marker",
+      "testData/cloudFormationTestData.marker"
+    )
+
+    for (directory in lookupDirectories) {
+      for (marker in lookupMarker) {
+        val file = File(directory, marker)
+        if (file.exists()) return@lazy file.parentFile
+      }
+    }
+
+    error("Could not find CloudFormation plugin testData")
+  }
 
   fun nodeToString(node: CfnNode): String = MyToStringStyle.toString(node, arrayOf("allTopLevelProperties", "functionId"))
 
@@ -50,7 +70,7 @@ object TestUtil {
 
     val expectText: String
     try {
-      expectText = StringUtil.convertLineSeparators(FileUtil.loadFile(expectFile, CharsetToolkit.UTF8_CHARSET))
+      expectText = StringUtil.convertLineSeparators(FileUtil.loadFile(expectFile, Charsets.UTF_8))
     } catch (e: IOException) {
       throw RuntimeException(e)
     }

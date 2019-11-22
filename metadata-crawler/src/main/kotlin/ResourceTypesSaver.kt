@@ -20,7 +20,7 @@ import java.util.TreeMap
 import java.util.zip.GZIPInputStream
 
 object ResourceTypesSaver {
-  private val FETCH_TIMEOUT_MS = 10000
+  private const val FETCH_TIMEOUT_MS = 10000
 
   private fun CloudFormationManualResourceType.toResourceTypeBuilder(): ResourceTypeBuilder {
     val builder = ResourceTypeBuilder(name, url)
