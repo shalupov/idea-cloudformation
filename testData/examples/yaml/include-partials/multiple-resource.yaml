@@ -1,0 +1,34 @@
+---
+IamSamlRole1:
+  Type: AWS::IAM::Role
+  Properties:
+    AssumeRolePolicyDocument:
+      Version: 2012-10-17
+      Statement:
+        -
+          Effect: Allow
+          Principal:
+            Federated:
+              Fn::Sub: arn:aws:iam::${AWS::AccountId}:saml-provider/MySamlProvider
+          Action: sts:AssumeRoleWithSAML
+          Condition:
+            StringEquals:
+              SAML:aud:
+                Ref: IamAuditUri
+
+IamSamlRole2:
+  Type: AWS::IAM::Role
+  Properties:
+    AssumeRolePolicyDocument:
+      Version: 2012-10-17
+      Statement:
+        -
+          Effect: Allow
+          Principal:
+            Federated:
+              Fn::Sub: arn:aws:iam::${AWS::AccountId}:saml-provider/MySamlProvider
+          Action: sts:AssumeRoleWithSAML
+          Condition:
+            StringEquals:
+              SAML:aud:
+                Ref: IamAuditUri

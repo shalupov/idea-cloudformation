@@ -1,0 +1,49 @@
+---
+# Cannot use include here
+AWSTemplateFormatVersion: 2010-09-09
+
+# Can use Include here
+Metadata:
+ Roles:
+    Description: Information about the roles
+
+#Cannot have Include here
+Parameters:
+  IamAuditUri:
+    Description: URI for Audit Trust of Federated Login
+    Type: String
+    Default: https://signin.aws.amazon.com/saml
+
+Resources:
+  # Single Resouce Include
+  IamSamlRole:
+    Fn::Transform:
+      Name: AWS::Include
+      Parameters:
+        Location: s3://my-partials-bucket/include-partials/single-resource.yaml
+
+  #Multiple resource include (cannot have more than 1)
+  Fn::Transform:
+    Name: AWS::Include
+    Parameters:
+      Location: s3://my-partials-bucket/include-partials/multiple-resource.yaml
+
+# Include is permitted here too
+Outputs:
+  IamSamlRoleOutput:
+    Description: IAM Role in master template for the Account Federated Role
+    Value:
+      # This Ref can be the logical in the template or the logical in the partial
+      Ref: IamSamlRole
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-FederatedUser-Role
+
+  IamSamlRole1Output:
+    Description: IAM Role 1 in partials template for the Account Federated Role
+    Value:
+      # This Ref can be the logical in the template or the logical in the partial
+      Ref: IamSamlRole1
+    Export:
+      Name:
+        Fn::Sub: ${AWS::StackName}-FederatedUser-Role1
